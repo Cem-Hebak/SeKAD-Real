@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $avatar = 'default.png';
     if (!empty($_FILES['avatar']['name'])) {
         $avatar = time() . '_' . $_FILES['avatar']['name'];
-        move_uploaded_file($_FILES['avatar']['tmp_name'], 'uploads/' . $avatar);
+        move_uploaded_file($_FILES['avatar']['tmp_name'], 'img/' . $avatar);
     }
 
     $sql = "INSERT INTO users (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 

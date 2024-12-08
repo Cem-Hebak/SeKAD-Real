@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
     <div class="register-box">
         <h2>Register</h2>
         <p>Please fill in the form to create an account.</p>
-        <form class="form-container" action="process_registration.php" method="POST" enctype="multipart/form-data">
+        <form class="form-container" action="registration_handling.php" method="POST" enctype="multipart/form-data">
             <!-- User Details -->
             <div class="form-column">
                 <h3>Personal Details</h3>
