@@ -49,41 +49,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare and execute the SQL query securely
-    $sql = "INSERT INTO users (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        'ssssssssssssssssssssss',
-        $name,
-        $email,
-        $password,
-        $mobilenumber,
-        $emergencymobilenumber,
-        $date_of_birth,
-        $gender,
-        $ic_number,
-        $nationality,
-        $address,
-        $fname,
-        $fcontact,
-        $foccupation,
-        $mname,
-        $mcontact,
-        $moccupation,
-        $gname,
-        $gcontact,
-        $goccupation,
-        $blood_type,
-        $allergies,
-        $avatar
-    );
+    $sql = "INSERT INTO users 
+            (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 
+            VALUES 
+            (:name, :email, :password, :mobilenumber, :emergencymobilenumber, :date_of_birth, :gender, :ic_number, :nationality, :address, :fname, :fcontact, :foccupation, :mname, :mcontact, :moccupation, :gname, :gcontact, :goccupation, :blood_type, :allergies, :avatar)";
+    
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':password' => $password,
+            ':mobilenumber' => $mobilenumber,
+            ':emergencymobilenumber' => $emergencymobilenumber,
+            ':date_of_birth' => $date_of_birth,
+            ':gender' => $gender,
+            ':ic_number' => $ic_number,
+            ':nationality' => $nationality,
+            ':address' => $address,
+            ':fname' => $fname,
+            ':fcontact' => $fcontact,
+            ':foccupation' => $foccupation,
+            ':mname' => $mname,
+            ':mcontact' => $mcontact,
+            ':moccupation' => $moccupation,
+            ':gname' => $gname,
+            ':gcontact' => $gcontact,
+            ':goccupation' => $goccupation,
+            ':blood_type' => $blood_type,
+            ':allergies' => $allergies,
+            ':avatar' => $avatar,
+        ]);
 
-    if ($stmt->execute()) {
         // Redirect to login page with success message
         header("Location: login.php?success=1");
         exit();
-    } else {
-        echo "Error: " . $stmt->error;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
 
     // Close statement and connection
