@@ -1,0 +1,93 @@
+<?php
+// Include database connection file
+include("db_connection.php");
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Collect form data
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Securely hash password
+    $mobilenumber = $_POST['mobilenumber'];
+    $emergencymobilenumber = $_POST['emergencymobilenumber'];
+    $date_of_birth = $_POST['date_of_birth'];
+    $gender = $_POST['gender'];
+    $ic_number = $_POST['ic_number'];
+    $nationality = $_POST['nationality'];
+    $address = $_POST['address'];
+    $fname = $_POST['fname'];
+    $fcontact = $_POST['fcontact'];
+    $foccupation = $_POST['foccupation'];
+    $mname = $_POST['mname'];
+    $mcontact = $_POST['mcontact'];
+    $moccupation = $_POST['moccupation'];
+    $gname = $_POST['gname'];
+    $gcontact = $_POST['gcontact'];
+    $goccupation = $_POST['goccupation'];
+    $blood_type = $_POST['blood_type'];
+    $allergies = $_POST['allergies'];
+
+    // Handle file upload for avatar
+    $avatar = 'default.png'; // Default avatar if no file is uploaded
+    if (!empty($_FILES['avatar']['name'])) {
+        $upload_dir = 'img/';
+        $avatar_name = time() . '_' . basename($_FILES['avatar']['name']);
+        $target_file = $upload_dir . $avatar_name;
+
+        // Validate file type
+        $allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+        if (in_array($_FILES['avatar']['type'], $allowed_types)) {
+            // Move the uploaded file
+            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $target_file)) {
+                $avatar = $avatar_name; // Save the new file name
+            } else {
+                echo "Error uploading avatar. Using default avatar instead.";
+            }
+        } else {
+            echo "Invalid file type. Only JPEG, PNG, JPG, and GIF files are allowed.";
+        }
+    }
+
+    // Prepare and execute the SQL query securely
+    $sql = "INSERT INTO users (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(
+        'ssssssssssssssssssssss',
+        $name,
+        $email,
+        $password,
+        $mobilenumber,
+        $emergencymobilenumber,
+        $date_of_birth,
+        $gender,
+        $ic_number,
+        $nationality,
+        $address,
+        $fname,
+        $fcontact,
+        $foccupation,
+        $mname,
+        $mcontact,
+        $moccupation,
+        $gname,
+        $gcontact,
+        $goccupation,
+        $blood_type,
+        $allergies,
+        $avatar
+    );
+
+    if ($stmt->execute()) {
+        // Redirect to login page with success message
+        header("Location: login.php?success=1");
+        exit();
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close statement and connection
+    $stmt->close();
+    $conn->close();
+}
+?>
