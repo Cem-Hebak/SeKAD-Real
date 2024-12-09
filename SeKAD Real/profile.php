@@ -5,35 +5,30 @@ include('db_connection.php'); // Include database connection
 // Default value for user name
 $userName = "Guest";
 
-// Check database connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+try {
+    // Check if user ID is stored in the session after login
+    if (isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
 
-// Assuming user ID is stored in the session after login
-if (isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id'];
-
-    // Query to fetch the user name
-    $sql = "SELECT name FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) { // Check if statement preparation is successful
-        $stmt->bind_param("i", $userId);
+        // Prepare and execute query using PDO
+        $sql = "SELECT name FROM users WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            // Fetch user name
-            $row = $result->fetch_assoc();
+        // Fetch user name
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
             $userName = htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
         }
-
-        $stmt->close(); // Close statement
     }
+} catch (PDOException $e) {
+    // Handle any database-related errors
+    die("Error: " . $e->getMessage());
 }
 
-$conn->close(); // Close connection
+// Close the PDO connection (optional, as PDO handles it automatically)
+$conn = null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
