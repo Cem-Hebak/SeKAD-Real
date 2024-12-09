@@ -19,7 +19,7 @@
                 <label for="name">Full Name:</label>
                 <input type="text" id="name" name="name" required>
 
-                <label for="email">Email:</label>
+                <label for="email">Email Address:</label>
                 <input type="email" id="email" name="email" required>
 
                 <label for="password">Password:</label>
@@ -36,6 +36,7 @@
 
                 <label for="gender">Gender:</label>
                 <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
