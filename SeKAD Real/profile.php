@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
 
     // Query to fetch the user name
-    $sql = "SELECT name FROM user WHERE id = ?";
+    $sql = "SELECT name FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) { // Check if statement preparation is successful
