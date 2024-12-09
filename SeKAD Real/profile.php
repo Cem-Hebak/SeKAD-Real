@@ -2,34 +2,37 @@
 session_start(); // Start the session
 include('db_connection.php'); // Include database connection
 
-// Default value for user name
-$userName = "Guest";
-
-try {
-    // Check if user ID is stored in the session after login
-    if (isset($_SESSION['user_id'])) {
-        $userId = $_SESSION['user_id'];
-
-        // Prepare and execute query using PDO
-        $sql = "SELECT name FROM users WHERE id = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        // Fetch user name
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            $userName = htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
-        }
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit();
     }
-} catch (PDOException $e) {
-    // Handle any database-related errors
-    die("Error: " . $e->getMessage());
-}
 
-// Close the PDO connection (optional, as PDO handles it automatically)
-$conn = null;
+    // Retrieve user data from the session
+    $name = htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8');
+$email = htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8');
+$mobilenumber = htmlspecialchars($_SESSION['mobilenumber'], ENT_QUOTES, 'UTF-8');
+$emergencymobilenumber = htmlspecialchars($_SESSION['emergencymobilenumber'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$role = htmlspecialchars($_SESSION['role'], ENT_QUOTES, 'UTF-8');
+$class = htmlspecialchars($_SESSION['class'] ?? 'Not Assigned', ENT_QUOTES, 'UTF-8');
+$date_of_birth = htmlspecialchars($_SESSION['date_of_birth'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$gender = htmlspecialchars($_SESSION['gender'] ?? 'Not Specified', ENT_QUOTES, 'UTF-8');
+$ic_number = htmlspecialchars($_SESSION['ic_number'] ?? 'Not Available', ENT_QUOTES, 'UTF-8');
+$nationality = htmlspecialchars($_SESSION['nationality'], ENT_QUOTES, 'UTF-8');
+$address = htmlspecialchars($_SESSION['address'] ?? 'Not Available', ENT_QUOTES, 'UTF-8');
+$fname = htmlspecialchars($_SESSION['fname'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$fcontact = htmlspecialchars($_SESSION['fcontact'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$foccupation = htmlspecialchars($_SESSION['foccupation'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$mname = htmlspecialchars($_SESSION['mname'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$mcontact = htmlspecialchars($_SESSION['mcontact'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$moccupation = htmlspecialchars($_SESSION['moccupation'] ?? 'Not Provided', ENT_QUOTES, 'UTF-8');
+$gname = htmlspecialchars($_SESSION['gname'] ?? 'Not Applicable', ENT_QUOTES, 'UTF-8');
+$gcontact = htmlspecialchars($_SESSION['gcontact'] ?? 'Not Applicable', ENT_QUOTES, 'UTF-8');
+$goccupation = htmlspecialchars($_SESSION['goccupation'] ?? 'Not Applicable', ENT_QUOTES, 'UTF-8');
+$blood_type = htmlspecialchars($_SESSION['blood_type'] ?? 'Unknown', ENT_QUOTES, 'UTF-8');
+$allergies = htmlspecialchars($_SESSION['allergies'] ?? 'None', ENT_QUOTES, 'UTF-8');
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +79,7 @@ $conn = null;
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SeKAD</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -96,7 +99,7 @@ $conn = null;
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+            <!-- <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a> -->
         </div>
     </nav>
     <!-- Navbar End -->
@@ -108,13 +111,15 @@ $conn = null;
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
                     <h1 class="display-3 text-white animated slideInDown">
-                        Hi, <?php echo $userName; ?>
+                        Hi, <?php echo $name; ?>
+                        
                     </h1>
+                    
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
                             <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Profile</li>
                         </ol>
                     </nav>
                 </div>
@@ -122,181 +127,156 @@ $conn = null;
         </div>
     </div>
     <!-- Header End -->
+     
+    <div style="width: 90%; margin: 0 auto;">
+    <h4 class="card-title" style="font-size: 20px; text-align: left; margin-bottom: 20px;">Biodata</h4>
+    <table class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
+                                    <thead>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 150px;">Name</th>
+                                            <td><?php echo $name; ?></td>
+                                            
+                                        </tr>
+                                         <tr>
+                                            <th style="width: 150px;">Date of Birth</th>
+                                            <td><?php echo htmlspecialchars($_SESSION['date_of_birth']); ?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Gender</th>
+                                            <td><?php echo $gender; ?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Identification Card Number</th>
+                                            <td><?php echo $ic_number; ?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Nationality</th>
+                                            <td><?php echo $nationality; ?></td>
+                                           
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Address</th>
+                                            <td><?php echo $address; ?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Role</th>
+                                            <td><?php echo $role; ?></td>
+                                        
+                                            
+                                        </tr>
+                                        <?php    if ($role === 'Student'): ?>
+                                        <tr>
+                                            <th style="width: 150px;">Class</th>
+                                            <td><?php echo $class; ?></td>
+                                        </tr>
+
+                                        <?php    elseif ($role === 'Teacher'): ?>
+                                            <tr>
+                                            <th style="width: 150px;">Class Teacher</th>
+                                            <td><?php echo $class; ?></td>
+                                            </tr>
+
+                                        <?php    elseif ($role === 'Staff'): ?>
+                                        <tr>
+                                        <th style="width: 150px;">Location</th>
+                                        <td><?php echo $class; ?></td>
+                                        </tr>
+
+                                        <?php    elseif ($role === 'Admin'): ?>
+                                        <?php endif; ?>
+
+                                        <tr>
+                                            <th style="width: 150px;">Contact</th>
+                                            <td><?php echo $mobilenumber; ?></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th style="width: 150px;">Email</th>
+                                            <td><?php echo $email; ?></td>
+                                        </tr>
+                                        
 
 
-    <!-- Service Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
-                            <h5 class="mb-3">Skilled Instructors</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5 class="mb-3">Online Classes</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-home text-primary mb-4"></i>
-                            <h5 class="mb-3">Home Projects</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                            <h5 class="mb-3">Book Library</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                
 
+                                    <div style="width: 90%; margin: 0 auto;">
+    <h4 class="card-title" style="font-size: 20px; text-align: left; margin-bottom: 20px;">Family Information</h4>
+    <table class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
+                                    <thead>
+                                        
+                                    </thead>
+                                    <tbody>
+                                         <tr>
+                                            <th style="width: 150px;">Father's Name</th>
+                                            <td><?php echo $fname; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Father's Contact</th>
+                                            <td><?php echo $fcontact; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Father's Occupation</th>
+                                            <td><?php echo $foccupation; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Mother's Name</th>
+                                            <td><?php echo $mname; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Mother's Contact</th>
+                                            <td><?php echo $mcontact; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Mother's Occupation</th>
+                                            <td><?php echo $moccupation; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Guardian's Name</th>
+                                            <td><?php echo $gname; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Guardian's Contact</th>
+                                            <td><?php echo $gcontact; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Guardian's Occupation</th>
+                                            <td><?php echo $goccupation; ?></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                    </div>
 
-    <!-- About Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
-                    <div class="position-relative h-100">
-                        <img class="img-fluid position-absolute w-100 h-100" src="img/about.jpg" alt="" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
-                    <h1 class="mb-4">Welcome to eLEARNING</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <div class="row gy-2 gx-4 mb-4">
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
+                                    <div style="width: 90%; margin: 0 auto;">
+    <h4 class="card-title" style="font-size: 20px; text-align: left; margin-bottom: 20px;">Health Information</h4>
+    <table class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
+                                    <thead>
+                                        
+                                    </thead>
+                                    <tbody>
+                                         <tr>
+                                            <th style="width: 150px;">Blood Type</th>
+                                            <td><?php echo $blood_type; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 150px;">Allergies</th>
+                                            <td><?php echo $allergies; ?></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    </table>
+                                    </div>
 
-
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
-                <h1 class="mb-5">Expert Instructors</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
-        
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">

@@ -17,12 +17,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role']; // Add a role column to the users table if not already there
             $_SESSION['mobilenumber'] = $user['mobilenumber'];
-            $_SESSION['fname'] = $user['fname'];
-            $_SESSION['mname'] = $user['mname'];
+            $_SESSION['emergencymobilenumber'] = $user['emergencymobilenumber'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['class'] = $user['class'];
             $_SESSION['avatar'] = $user['avatar'];
-
+            $_SESSION['date_of_birth'] = $user['date_of_birth'];
+            $_SESSION['gender'] = $user['gender'];
+            $_SESSION['ic_number'] = $user['ic_number'];
+            $_SESSION['nationality'] = $user['nationality'];
+            $_SESSION['address'] = $user['address'];
+            $_SESSION['fname'] = $user['fname'];
+            $_SESSION['fcontact'] = $user['fcontact'];
+            $_SESSION['foccupation'] = $user['foccupation'];
+            $_SESSION['mname'] = $user['mname'];
+            $_SESSION['mcontact'] = $user['mcontact'];
+            $_SESSION['moccupation'] = $user['moccupation'];
+            $_SESSION['gname'] = $user['gname'];
+            $_SESSION['gcontact'] = $user['gcontact'];
+            $_SESSION['goccupation'] = $user['goccupation'];
+            $_SESSION['blood_type'] = $user['blood_type'];
+            $_SESSION['allergies'] = $user['allergies'];
             // Redirect to home page
             header("Location: home.php");
             exit();
