@@ -1,4 +1,63 @@
 /********** Template CSS **********/
+.container1 {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.header h1 {
+    font-size: 24px;
+    color: #374151;
+}
+.header p {
+    font-size: 16px;
+    color: #6b7280;
+}
+.divider {
+    border-top: 1px solid #d1d5db;
+    margin: 20px 0;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.item:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+.item span {
+    font-size: 16px;
+    color: #374151;
+}
+.item .btn {
+    background: none;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+.item .btn:hover {
+    background: #2563eb;
+    color: #fff;
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #6b7280;
+}
 :root {
     --primary: #06BBCC;
     --light: #F0FBFC;
@@ -255,7 +314,8 @@
 /*** Service ***/
 .service-item {
     background: var(--light);
-    transition: .5s;
+    transition: .30s;
+    /* pointer-events: auto !important; */
 }
 
 .service-item:hover {
