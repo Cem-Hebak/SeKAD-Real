@@ -84,47 +84,7 @@
         <button id="submit-attendance">Submit Attendance</button>        
     </div>
     <script src="js/attendanceRecord.js"></script>
-    <?php
-    try {
-        // Query to fetch all names from the 'users' table
-        $stmt = $pdo->prepare("SELECT name FROM users ORDER BY name ASC");
-        $stmt->execute();
     
-        // Fetch all rows
-        $stmt = $pdo->query("SELECT id, name FROM users");
-        $names = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        if (!empty($names)) {
-            echo "<tr>"; // Start an unordered list
-            foreach ($names as $row) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . "</td>"; // Name column
-
-                // Check if 'id' exists before using it
-                $user_id = $row['id'] ?? 'Unknown ID';
-                echo '<td>';
-                echo '<form method="POST" action="update_class.php">';
-                echo '<div class="dropdown">';
-                echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Select Class</button>';
-                echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                echo '<li><button class="dropdown-item" type="submit" name="class" value="Class A">Class A</button></li>';
-                echo '<li><button class="dropdown-item" type="submit" name="class" value="Class B">Class B</button></li>';
-                echo '<li><button class="dropdown-item" type="submit" name="class" value="Class C">Class C</button></li>';
-                echo '</ul>';
-                echo '</div>';
-                echo '<input type="hidden" name="user_id" value="' . htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8') . '">'; // Include user_id
-                echo '</form>';
-                echo '</td>';
-                echo "</tr>";
-            }
-            echo "</tr>"; // End the unordered list
-        } else {
-            echo "No names found in the database.";
-        }
-    } catch (PDOException $e) {
-        die("Error: " . $e->getMessage());
-    }
-    ?>
     
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
