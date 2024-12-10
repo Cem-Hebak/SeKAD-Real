@@ -57,18 +57,17 @@ include ('db_connection.php');
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="login.php" class="nav-item nav-link">Log In</a>
-                <a href="register.php" class="nav-item nav-link">Register</a>
-                <a href="profile.php" class="nav-item nav-link">Profile</a>
                 <a href="courses.html" class="nav-item nav-link">Courses</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="team.html" class="dropdown-item">Our Team</a>
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="Teacher Assign.php" class="dropdown-item">Teacher Assign</a>
                         <a href="404.html" class="dropdown-item">404 Page</a>
                         <a href="login.php" class="dropdown-item">Log In</a>
                         <a href="register.php" class="dropdown-item">Register</a>
+                        <a href="profile.php" class="dropdown-item">Profile</a>
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>

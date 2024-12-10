@@ -8,6 +8,7 @@ include('db_connection.php'); // Include database connection
     }
 
     // Retrieve user data from the session
+    $id = htmlspecialchars($_SESSION['id'], ENT_QUOTES, 'UTF-8');
     $name = htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8');
 $email = htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8');
 $mobilenumber = htmlspecialchars($_SESSION['mobilenumber'], ENT_QUOTES, 'UTF-8');
@@ -35,10 +36,14 @@ $allergies = htmlspecialchars($_SESSION['allergies'] ?? 'None', ENT_QUOTES, 'UTF
 
 <!DOCTYPE html>
 <html lang="en">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <head>
     <meta charset="utf-8">
-    <title>Profile</title>
+    <title>Teacher Assign</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -112,7 +117,7 @@ $allergies = htmlspecialchars($_SESSION['allergies'] ?? 'None', ENT_QUOTES, 'UTF
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center">
                     <h1 class="display-3 text-white animated slideInDown">
-                        Hi, <?php echo $name; ?>
+                        SeKAD
                         
                     </h1>
                     
@@ -136,73 +141,52 @@ $allergies = htmlspecialchars($_SESSION['allergies'] ?? 'None', ENT_QUOTES, 'UTF
                                         
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th style="width: 150px;">Name</th>
-                                            <td><?php echo $name; ?></td>
-                                            
-                                        </tr>
-                                         <tr>
-                                            <th style="width: 150px;">Date of Birth</th>
-                                            <td><?php echo htmlspecialchars($_SESSION['date_of_birth']); ?></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Gender</th>
-                                            <td><?php echo $gender; ?></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Identification Card Number</th>
-                                            <td><?php echo $ic_number; ?></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Nationality</th>
-                                            <td><?php echo $nationality; ?></td>
-                                           
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Address</th>
-                                            <td><?php echo $address; ?></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Role</th>
-                                            <td><?php echo $role; ?></td>
                                         
-                                            
-                                        </tr>
-                                        <?php    if ($role === 'Student'): ?>
-                                        <tr>
-                                            <th style="width: 150px;">Class</th>
-                                            <td><?php echo $class; ?></td>
-                                        </tr>
+                                        <td style="width: 1100px;">Name</td>
+                                        <td>Class</td>
 
-                                        <?php    elseif ($role === 'Teacher'): ?>
-                                            <tr>
-                                            <th style="width: 150px;">Class Teacher</th>
-                                            <td><?php echo $class; ?></td>
-                                            </tr>
+                                        <?php
+                                        try {
+                                            // Query to fetch all names from the 'users' table
+                                            $stmt = $pdo->prepare("SELECT name FROM users ORDER BY name ASC");
+                                            $stmt->execute();
+                                        
+                                            // Fetch all rows
+                                            $stmt = $pdo->query("SELECT id, name FROM users");
+                                            $names = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        
+                                            if (!empty($names)) {
+                                                echo "<tr>"; // Start an unordered list
+                                                foreach ($names as $row) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . "</td>"; // Name column
 
-                                        <?php    elseif ($role === 'Staff'): ?>
-                                        <tr>
-                                        <th style="width: 150px;">Location</th>
-                                        <td><?php echo $class; ?></td>
-                                        </tr>
-
-                                        <?php    elseif ($role === 'Admin'): ?>
-                                        <?php endif; ?>
-
-                                        <tr>
-                                            <th style="width: 150px;">Contact</th>
-                                            <td><?php echo $mobilenumber; ?></td>
-                                        </tr>
-
-                                        <tr>
-                                            <th style="width: 150px;">Email</th>
-                                            <td><?php echo $email; ?></td>
-                                        </tr>
+                                                    // Check if 'id' exists before using it
+                                                    $user_id = $row['id'] ?? 'Unknown ID';
+                                                    echo '<td>';
+                                                    echo '<form method="POST" action="update_class.php">';
+                                                    echo '<div class="dropdown">';
+                                                    echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Select Class</button>';
+                                                    echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                                                    echo '<li><button class="dropdown-item" type="submit" name="class" value="Class A">Class A</button></li>';
+                                                    echo '<li><button class="dropdown-item" type="submit" name="class" value="Class B">Class B</button></li>';
+                                                    echo '<li><button class="dropdown-item" type="submit" name="class" value="Class C">Class C</button></li>';
+                                                    echo '</ul>';
+                                                    echo '</div>';
+                                                    echo '<input type="hidden" name="user_id" value="' . htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8') . '">'; // Include user_id
+                                                    echo '</form>';
+                                                    echo '</td>';
+                                                    echo "</tr>";
+                                                }
+                                                echo "</tr>"; // End the unordered list
+                                            } else {
+                                                echo "No names found in the database.";
+                                            }
+                                        } catch (PDOException $e) {
+                                            die("Error: " . $e->getMessage());
+                                        }
+                                        ?>
+                                       
                                         
 
 
@@ -211,72 +195,7 @@ $allergies = htmlspecialchars($_SESSION['allergies'] ?? 'None', ENT_QUOTES, 'UTF
                                     </div>
                                 
 
-                                    <div style="width: 90%; margin: 0 auto;">
-    <h4 class="card-title" style="font-size: 20px; text-align: left; margin-bottom: 20px;">Family Information</h4>
-    <table class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
-                                    <thead>
-                                        
-                                    </thead>
-                                    <tbody>
-                                         <tr>
-                                            <th style="width: 150px;">Father's Name</th>
-                                            <td><?php echo $fname; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Father's Contact</th>
-                                            <td><?php echo $fcontact; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Father's Occupation</th>
-                                            <td><?php echo $foccupation; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Mother's Name</th>
-                                            <td><?php echo $mname; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Mother's Contact</th>
-                                            <td><?php echo $mcontact; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Mother's Occupation</th>
-                                            <td><?php echo $moccupation; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Guardian's Name</th>
-                                            <td><?php echo $gname; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Guardian's Contact</th>
-                                            <td><?php echo $gcontact; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Guardian's Occupation</th>
-                                            <td><?php echo $goccupation; ?></td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                    </div>
-
-                                    <div style="width: 90%; margin: 0 auto;">
-    <h4 class="card-title" style="font-size: 20px; text-align: left; margin-bottom: 20px;">Health Information</h4>
-    <table class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
-                                    <thead>
-                                        
-                                    </thead>
-                                    <tbody>
-                                         <tr>
-                                            <th style="width: 150px;">Blood Type</th>
-                                            <td><?php echo $blood_type; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 150px;">Allergies</th>
-                                            <td><?php echo $allergies; ?></td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                    </table>
-                                    </div>
+                        
 
                                   
     <!-- Team End -->
