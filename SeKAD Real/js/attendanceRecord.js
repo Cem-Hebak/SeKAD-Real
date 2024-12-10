@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById("submit-attendance");
 
     function fetchStudents() {
+        
         console.log("Fetching students...");
         fetch("getStudent.php")
             .then((response) => {
