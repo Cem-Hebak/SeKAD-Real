@@ -65,9 +65,10 @@ include ('db_connection.php');
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                         <a href="Teacher Assign.php" class="dropdown-item">Teacher Assign</a>
                         <a href="404.html" class="dropdown-item">404 Page</a>
+                        <a href="profile.php" class="dropdown-item">Profile</a>
                         <a href="login.php" class="dropdown-item">Log In</a>
                         <a href="register.php" class="dropdown-item">Register</a>
-                        <a href="profile.php" class="dropdown-item">Profile</a>
+                        
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
