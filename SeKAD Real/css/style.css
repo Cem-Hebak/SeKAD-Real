@@ -1,4 +1,292 @@
 /********** Template CSS **********/
+.container1 {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.header h1 {
+    font-size: 24px;
+    color: #374151;
+}
+.header p {
+    font-size: 16px;
+    color: #6b7280;
+}
+.divider {
+    border-top: 1px solid #d1d5db;
+    margin: 20px 0;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.item:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+.item span {
+    font-size: 16px;
+    color: #374151;
+}
+.item .btn {
+    background: none;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+.item .btn:hover {
+    background: #2563eb;
+    color: #fff;
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.container2 {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.divider {
+    border-bottom: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.section-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.notification-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.notification-option label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.notification-option label i {
+    margin-right: 10px;
+    font-size: 20px;
+    color: #666;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background-color: #007bff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.container3 {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h11 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.divider1 {
+    border-bottom: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+.subheading {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.subheading span {
+    font-weight: bold;
+    color: #888;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #2c3e50;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.payment-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+.payment-option label {
+    font-size: 14px;
+    color: #333;
+}
+
+.button-container {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.btn-next {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-next:hover {
+    background-color: #0056b3;
+}
+
+.container4 {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+h12 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+#attendance-list {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.attendance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.attendance-item label {
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
 :root {
     --primary: #06BBCC;
     --light: #F0FBFC;
@@ -255,7 +543,8 @@
 /*** Service ***/
 .service-item {
     background: var(--light);
-    transition: .5s;
+    transition: .30s;
+    /* pointer-events: auto !important; */
 }
 
 .service-item:hover {
