@@ -22,6 +22,9 @@
                 <label for="email">Email Address:</label>
                 <input type="email" id="email" name="email" required>
 
+                <label for="ic_number">IC Number:</label>
+                <input type="text" id="ic_number" name="ic_number" required>
+
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
@@ -32,7 +35,7 @@
                 <input type="text" id="emergencymobilenumber" name="emergencymobilenumber">
 
                 <label for="date_of_birth">Date of Birth:</label>
-                <input type="date" id="date_of_birth" name="date_of_birth" required>
+                <input type="date" id="date_of_birth" name="date_of_birth">
 
                 <label for="gender">Gender:</label>
                 <select id="gender" name="gender" required>
@@ -41,14 +44,18 @@
                     <option value="Female">Female</option>
                 </select>
 
-                <label for="ic_number">IC Number:</label>
-                <input type="text" id="ic_number" name="ic_number" required>
-
                 <label for="nationality">Nationality:</label>
                 <input type="text" id="nationality" name="nationality" value="Malaysian" readonly>
 
                 <label for="address">Address:</label>
                 <input type="text" id="address" name="address">
+
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                </select>
             </div>
 
             <!-- Family Details -->

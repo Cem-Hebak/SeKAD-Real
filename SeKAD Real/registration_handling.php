@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emergencymobilenumber = $_POST['emergencymobilenumber'];
     $date_of_birth = $_POST['date_of_birth'];
     $gender = $_POST['gender'];
+    $role = $_POST['role'];
     $ic_number = $_POST['ic_number'];
     $nationality = $_POST['nationality'];
     $address = $_POST['address'];
@@ -50,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Prepare and execute the SQL query securely
     $sql = "INSERT INTO users 
-            (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 
+            (name, email, password, mobilenumber, emergencymobilenumber, date_of_birth, gender, role, ic_number, nationality, address, fname, fcontact, foccupation, mname, mcontact, moccupation, gname, gcontact, goccupation, blood_type, allergies, avatar) 
             VALUES 
-            (:name, :email, :password, :mobilenumber, :emergencymobilenumber, :date_of_birth, :gender, :ic_number, :nationality, :address, :fname, :fcontact, :foccupation, :mname, :mcontact, :moccupation, :gname, :gcontact, :goccupation, :blood_type, :allergies, :avatar)";
+            (:name, :email, :password, :mobilenumber, :emergencymobilenumber, :date_of_birth, :gender, :role, :ic_number, :nationality, :address, :fname, :fcontact, :foccupation, :mname, :mcontact, :moccupation, :gname, :gcontact, :goccupation, :blood_type, :allergies, :avatar)";
     
     try {
         $stmt = $pdo->prepare($sql);
@@ -64,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ':emergencymobilenumber' => $emergencymobilenumber,
             ':date_of_birth' => $date_of_birth,
             ':gender' => $gender,
+            ':role' => $role,
             ':ic_number' => $ic_number,
             ':nationality' => $nationality,
             ':address' => $address,
