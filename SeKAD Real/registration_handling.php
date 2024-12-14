@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emergencymobilenumber = $_POST['emergencymobilenumber'];
     $date_of_birth = $_POST['date_of_birth'];
     $gender = $_POST['gender'];
+    $role = $_POST['role'];
     $ic_number = $_POST['ic_number'];
     $nationality = $_POST['nationality'];
     $address = $_POST['address'];
